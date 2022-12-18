@@ -8,3 +8,6 @@ properties:
   name: URL
     title: Name
     type: url
+  name: attachments
+    title: Attempt Attachment Extraction
+    type: boolean
