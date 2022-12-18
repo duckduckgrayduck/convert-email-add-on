@@ -8,6 +8,7 @@ properties:
   url: 
     title: URL
     type: string
+    format: uri
   attachments:
     title: Attempt Attachment Extraction
     type: boolean
