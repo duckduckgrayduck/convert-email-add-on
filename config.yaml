@@ -1,12 +1,14 @@
 title: Email Conversion Add-On
-description: When provided a public Google Drive or DropBox link, it will download the EML/MSG files in the link, convert them to PDF, and upload them to DocumentCloud. 
+description: When provided a public Google Drive or Dropbox link, it will download the EML/MSG files in the link, convert them to PDF, and upload them to DocumentCloud. 
 type: object
-documents: {}
+documents: []
 properties:
-  url: 
+ url:
     title: URL
     type: string
     format: uri
+    description: >-
+      A publically accessible Google Drive or Dropbox folder or file. 
   attachments:
     title: Attempt Attachment Extraction
     type: boolean
