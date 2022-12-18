@@ -13,5 +13,5 @@ properties:
     title: Attempt Attachment Extraction
     type: boolean
 required: 
-  -url
-  -attachments
+  - url
+  - attachments
