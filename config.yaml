@@ -7,7 +7,7 @@ documents: []
 properties:
   url: 
     title: URL
-    type: url
+    type: uri
   attachments:
     title: Attempt Attachment Extraction
     type: boolean
