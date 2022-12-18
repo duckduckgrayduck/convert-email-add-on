@@ -5,9 +5,12 @@ description: When provided a public Google Drive or DropBox link, it will downlo
 type: object
 documents: []
 properties:
-  name: URL
+  url: URL
     title: Name
     type: url
-  name: attachments
+  attachments:
     title: Attempt Attachment Extraction
     type: boolean
+required: 
+  -url
+  -attachments
