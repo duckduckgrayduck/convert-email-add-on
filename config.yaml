@@ -1,9 +1,7 @@
-# The title is the title of your Add-On
 title: Email Conversion Add-On
-# The description will be shown above the form when activating the Add-On
 description: When provided a public Google Drive or DropBox link, it will download the EML/MSG files in the link, convert them to PDF, and upload them to DocumentCloud. 
 type: object
-documents: []
+documents: {}
 properties:
   url: 
     title: URL
