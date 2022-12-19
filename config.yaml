@@ -7,9 +7,8 @@ properties:
     title: URL
     type: string
     format: uri
-    description: >-
-      A publically accessible Google Drive or Dropbox folder or file. 
-  attachments:
+    description: A publicly accessible Google Drive or Dropbox folder or file. 
+ attachments:
     title: Attempt Attachment Extraction
     type: boolean
 required: 
