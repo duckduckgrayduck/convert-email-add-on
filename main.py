@@ -16,4 +16,4 @@ class ConvertEmail(AddOn):
 
 
 if __name__ == "__main__":
-    HelloWorld().main()
+    ConvertEmail().main()
