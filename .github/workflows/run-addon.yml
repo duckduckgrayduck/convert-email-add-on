@@ -3,15 +3,9 @@ name: Run Add-On
 on: repository_dispatch
 
 jobs:
-  Requirements: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install JDK and wkhtmltopdf requirements
-        run: |
-           sudo apt-get update
-           sudo apt-get install openjdk-11-jre wkhtmltopdf
   Run-Add-On:
     uses: MuckRock/documentcloud-addon-workflows/.github/workflows/run-addon.yml@v1
     with:
       timeout: 360
+      apt-packages: opendk-11-jre wkhtmltopdf
  
