@@ -62,7 +62,7 @@ class ConvertEmail(AddOn):
 			
 		sfiles = "file" if successes == 1 else "files"
 		efiles = "file" if errors == 1 else "files"
-		self.set_message(f"Transcribed {successes} {sfiles}, skipped {errors} {efiles}")
+		self.set_message(f"Converted {successes} {sfiles}, skipped {errors} {efiles}")
 		os.chdir('..')
 		shutil.rmtree("./out", ignore_errors=False, onerror=None)
 
