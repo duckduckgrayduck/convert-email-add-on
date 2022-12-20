@@ -36,10 +36,6 @@ class ConvertEmail(AddOn):
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
         extracts attachments if selected"""
-        url = "https://github.com/nickrussler/email-to-pdf-converter/releases/download/2.5.3/emailconverter-2.5.3-all.jar"
-        resp = requests.get(url, timeout=10)
-        with open("email.jar", "wb") as file:
-            file.write(resp.content)
         if self.data["attachments"]:
             bash_cmd = f"java -jar email.jar -a -q {file_path}; mv ./out/EMLs/*attachments* attach;"
         else:
