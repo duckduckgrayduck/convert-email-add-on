@@ -11,9 +11,9 @@ from documentcloud.addon import AddOn
 from clouddl import grab
 
 class ConvertEmail(AddOn):
-    """DocumentCloud Add-On that converts EML/MSG files to PDFs and uploads them to DocumentCloud"""
-	def check_permissions(self):
-	"""The user must be a verified journalist to upload a document"""
+	"""DocumentCloud Add-On that converts EML/MSG files to PDFs and uploads them to DocumentCloud"""
+    def check_permissions(self):
+		"""The user must be a verified journalist to upload a document"""
 		self.set_message("Checking permissions...")
 		user = self.client.users.get("me")
 		if not user.verified_journalist:
