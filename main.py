@@ -4,7 +4,6 @@ when given a public Google Drive or Dropbox link containing EML/MSG files,
 will convert them to PDFs and upload them to DocumentCloud
 """
 import os 
-import re
 import shutil
 import subprocess
 from documentcloud.addon import AddOn
@@ -28,13 +27,10 @@ class ConvertEmail(AddOn):
 		os.makedirs(os.path.dirname("./out/"), exist_ok=True)
 		downloaded = grab(url, "./out/")
 
-	def eml_to_pdf(fp, new_name=None, timeout=180):
+	def eml_to_pdf(fp, timeout=180):
 		converter_jar = 'email.jar'
 		bash_cmd = ['bash', '-c', f"timeout {timeout} java -jar {converter_jar} '{fp}' ; :"]
 		conv_run = subprocess.run(bash_cmd, stderr=subprocess.PIPE)
-		print(conv_run.stderr)
-		pdf_fp = re.sub('.eml$', '.pdf', fp)    
-		return pdf_fp
 
 	def main(self):
 		url = self.data["url"]
