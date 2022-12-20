@@ -26,6 +26,7 @@ class ConvertEmail(AddOn):
 		"""Fetch the files from either a cloud share link or any public URL"""
 		self.set_message("Retrieving EML/MSG files...")
 		os.makedirs(os.path.dirname("./out/"), exist_ok=True)
+		os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
 		downloaded = grab(url, "./out/")
 
 	def eml_to_pdf(self, fp):
@@ -33,12 +34,16 @@ class ConvertEmail(AddOn):
 		resp = requests.get(url, timeout=10)
 		with open('email.jar', 'wb') as file:
 			file.write(resp.content)
-		bash_cmd = f"java -jar email.jar {fp}"
+		if self.data["attachments"]:
+			bash_cmd = f"java -jar email.jar -a {fp}; mv ./out/*attachments* attach; zip -r attachments.zip attach"
+			self.upload_file(open("attachments.zip"))
+		else:
+			bash_cmd = f"java -jar email.jar {fp}"
 		conv_run = subprocess.call(bash_cmd, shell=True)
 
 	def main(self):
 		url = self.data["url"]
-		extract_attachments = self.data["attachments"]
+		#extract_attachments = self.data["attachments"]
 		self.check_permissions()
 		self.fetch_files(url)
 		
