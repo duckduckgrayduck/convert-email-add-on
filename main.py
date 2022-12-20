@@ -31,7 +31,7 @@ class ConvertEmail(AddOn):
 	def eml_to_pdf(fp, new_name=None, timeout=180):
 		converter_jar = 'email.jar'
 		if new_name:
-			new_fp = dirname(fp) + '/' + new_name
+			new_fp = os.path.dirname(fp) + '/' + new_name
 			bash_cmd = ['bash', '-c', f"timeout {timeout} java -jar {converter_jar} -o '{new_fp}' ; :"]
 		else:
 			bash_cmd = ['bash', '-c', f"timeout {timeout} java -jar {converter_jar} '{fp}' ; :"]
