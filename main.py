@@ -73,6 +73,7 @@ class ConvertEmail(AddOn):
 		efiles = "file" if errors == 1 else "files"
 		self.set_message(f"Converted {successes} {sfiles}, skipped {errors} {efiles}")
 		shutil.rmtree("./out", ignore_errors=False, onerror=None)
+		shutil.rmtree("./attach", ignore_errors=False, onerror=None)
 
 if __name__ == "__main__":
 	ConvertEmail().main()
