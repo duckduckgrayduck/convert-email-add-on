@@ -57,7 +57,7 @@ class ConvertEmail(AddOn):
 
         successes = 0
         errors = 0
-        for current_path, files in os.walk("./out/"):
+        for current_path, folders, files in os.walk("./out/"):
             for file_name in files:
                 file_name = os.path.join(current_path, file_name)
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
