@@ -33,9 +33,7 @@ class ConvertEmail(AddOn):
 		resp = requests.get(url, timeout=10)
 		with open('email.jar', 'wb') as file:
 			file.write(resp.content)
-		os.chdir('out')
-		print(fp)
-		bash_cmd = f"java -jar ../email.jar {fp}"
+		bash_cmd = f"java -jar email.jar {fp}"
 		conv_run = subprocess.call(bash_cmd, shell=True)
 
 	def main(self):
@@ -50,20 +48,20 @@ class ConvertEmail(AddOn):
 				file_name = os.path.join(current_path, file_name)
 				basename = os.path.basename(file_name)
 				self.set_message("Attempting to convert EML/MSG files to PDFs...")
+				abs_path = os.path.abspath(file_name)
 				try:
-					result = self.eml_to_pdf(basename)
+					result = self.eml_to_pdf(abs_path)
 				except RuntimeError:
 					errors += 1
 					continue
 				self.set_message("Uploading converted file to DocumentCloud...")
-				file_name_no_ext = os.path.splitext(basename)[0]
+				file_name_no_ext = os.path.splitext(abs_path)[0]
 				self.client.documents.upload(f"{file_name_no_ext}.pdf")
 				successes += 1
 			
 		sfiles = "file" if successes == 1 else "files"
 		efiles = "file" if errors == 1 else "files"
 		self.set_message(f"Converted {successes} {sfiles}, skipped {errors} {efiles}")
-		os.chdir('..')
 		shutil.rmtree("./out", ignore_errors=False, onerror=None)
 
 if __name__ == "__main__":
