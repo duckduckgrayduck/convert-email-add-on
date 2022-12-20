@@ -38,6 +38,7 @@ class ConvertEmail(AddOn):
 
 	def main(self):
 		url = self.data["url"]
+		extract_attachments = self.data["attachments"]
 		self.check_permissions()
 		self.fetch_files(url)
 		
@@ -54,10 +55,11 @@ class ConvertEmail(AddOn):
 				except RuntimeError:
 					errors += 1
 					continue
-				self.set_message("Uploading converted file to DocumentCloud...")
-				file_name_no_ext = os.path.splitext(abs_path)[0]
-				self.client.documents.upload(f"{file_name_no_ext}.pdf")
-				successes += 1
+				else: 
+					self.set_message("Uploading converted file to DocumentCloud...")
+					file_name_no_ext = os.path.splitext(abs_path)[0]
+					self.client.documents.upload(f"{file_name_no_ext}.pdf")
+					successes += 1
 			
 		sfiles = "file" if successes == 1 else "files"
 		efiles = "file" if errors == 1 else "files"
