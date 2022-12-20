@@ -53,7 +53,7 @@ class ConvertEmail(AddOn):
 				basename = os.path.basename(file_name)
 				self.set_message("Attempting to convert EML/MSG files to PDFs...")
 				try:
-					result = eml_to_pdf(file_name)
+					result = self.eml_to_pdf(file_name)
 				except RuntimeError:
 					errors += 1
 					continue
