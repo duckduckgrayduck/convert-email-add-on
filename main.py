@@ -42,7 +42,6 @@ class ConvertEmail(AddOn):
 
 	def main(self):
 		url = self.data["url"]
-		#extract_attachments = self.data["attachments"]
 		self.check_permissions()
 		self.fetch_files(url)
 		
