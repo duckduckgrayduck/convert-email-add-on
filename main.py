@@ -35,9 +35,9 @@ class ConvertEmail(AddOn):
 		with open('email.jar', 'wb') as file:
 			file.write(resp.content)
 		if self.data["attachments"]:
-			bash_cmd = f"java -jar email.jar -a {fp}; mv ./out/EMLs/*attachments* attach;"
+			bash_cmd = f"java -jar email.jar -a -q {fp}; mv ./out/EMLs/*attachments* attach;"
 		else:
-			bash_cmd = f"java -jar email.jar {fp}"
+			bash_cmd = f"java -jar email.jar -q {fp}"
 		conv_run = subprocess.call(bash_cmd, shell=True)
 
 	def main(self):
@@ -66,7 +66,7 @@ class ConvertEmail(AddOn):
 					successes += 1
 		
 		if self.data["attachments"]:
-			subprocess.call("zip -r attachments.zip attach", shell=True)
+			subprocess.call("zip -q -r attachments.zip attach", shell=True)
 			self.upload_file(open("attachments.zip"))
 
 		sfiles = "file" if successes == 1 else "files"
