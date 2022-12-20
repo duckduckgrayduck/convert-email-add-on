@@ -5,6 +5,7 @@ will convert them to PDFs and upload them to DocumentCloud
 """
 import os 
 import shutil
+import requests
 import subprocess
 from documentcloud.addon import AddOn
 from clouddl import grab
@@ -27,10 +28,15 @@ class ConvertEmail(AddOn):
 		os.makedirs(os.path.dirname("./out/"), exist_ok=True)
 		downloaded = grab(url, "./out/")
 
-	def eml_to_pdf(fp, timeout=180):
-		converter_jar = 'email.jar'
-		bash_cmd = ['bash', '-c', f"timeout {timeout} java -jar {converter_jar} '{fp}' ; :"]
-		conv_run = subprocess.run(bash_cmd, stderr=subprocess.PIPE)
+	def eml_to_pdf(self, fp):
+		url= 'https://github.com/nickrussler/email-to-pdf-converter/releases/download/2.5.3/emailconverter-2.5.3-all.jar'
+		resp = requests.get(url, timeout=10)
+		with open('email.jar', 'wb') as file:
+			file.write(resp.content)
+		os.chdir('out')
+		print(fp)
+		bash_cmd = f"java -jar ../email.jar {fp}"
+		conv_run = subprocess.call(bash_cmd, shell=True)
 
 	def main(self):
 		url = self.data["url"]
@@ -45,19 +51,20 @@ class ConvertEmail(AddOn):
 				basename = os.path.basename(file_name)
 				self.set_message("Attempting to convert EML/MSG files to PDFs...")
 				try:
-					result = self.eml_to_pdf(file_name)
+					result = self.eml_to_pdf(basename)
 				except RuntimeError:
 					errors += 1
 					continue
 				self.set_message("Uploading converted file to DocumentCloud...")
 				file_name_no_ext = os.path.splitext(basename)[0]
-				self.client.documents.upload(f"./out/{file_name_no_ext}.pdf")
+				self.client.documents.upload(f"{file_name_no_ext}.pdf")
 				successes += 1
 			
 		sfiles = "file" if successes == 1 else "files"
 		efiles = "file" if errors == 1 else "files"
 		self.set_message(f"Transcribed {successes} {sfiles}, skipped {errors} {efiles}")
-		shutil.rmtree("./out/", ignore_errors=False, onerror=None)
+		os.chdir('..')
+		shutil.rmtree("./out", ignore_errors=False, onerror=None)
 
 if __name__ == "__main__":
 	ConvertEmail().main()
