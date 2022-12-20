@@ -35,8 +35,7 @@ class ConvertEmail(AddOn):
 		with open('email.jar', 'wb') as file:
 			file.write(resp.content)
 		if self.data["attachments"]:
-			bash_cmd = f"java -jar email.jar -a {fp}; mv ./out/*attachments* attach; zip -r attachments.zip attach"
-			self.upload_file(open("attachments.zip"))
+			bash_cmd = f"java -jar email.jar -a {fp}; mv ./out/*attachments* attach;"
 		else:
 			bash_cmd = f"java -jar email.jar {fp}"
 		conv_run = subprocess.call(bash_cmd, shell=True)
@@ -65,7 +64,11 @@ class ConvertEmail(AddOn):
 					file_name_no_ext = os.path.splitext(abs_path)[0]
 					self.client.documents.upload(f"{file_name_no_ext}.pdf")
 					successes += 1
-			
+		
+		if self.data["attachments"]:
+			subprocess.call("zip -r attachments.zip attach", shell=True)
+			self.upload_file(open("attachments.zip"))
+
 		sfiles = "file" if successes == 1 else "files"
 		efiles = "file" if errors == 1 else "files"
 		self.set_message(f"Converted {successes} {sfiles}, skipped {errors} {efiles}")
