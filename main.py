@@ -36,7 +36,7 @@ class ConvertEmail(AddOn):
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
         extracts attachments if selected"""
-        if self.data["attachments"]:
+        if extract_attachments:
             bash_cmd = f"java -jar email.jar -a -q {file_path}; mv ./out/EMLs/*attachments* attach;"
         else:
             bash_cmd = f"java -jar email.jar -q {file_path}"
