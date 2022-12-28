@@ -13,3 +13,4 @@ properties:
     type: boolean
 required: 
   - url
+  - attachments
