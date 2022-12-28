@@ -50,7 +50,7 @@ class ConvertEmail(AddOn):
         url = self.data["url"]
         self.check_permissions()
         self.fetch_files(url)
-        if self.data.has_key("attachments"):
+        if "attachments" in self.data:
             extract_attachments=True
         else: 
             extract_attachments=False
