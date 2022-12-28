@@ -14,7 +14,11 @@ from clouddl import grab
 
 class ConvertEmail(AddOn):
     """DocumentCloud Add-On that converts EML/MSG files to PDFs and uploads them to DocumentCloud"""
-
+    
+    if "attachments" in self.data:
+        extract_attachments=True
+    else:
+        extract_attachments=False
     def check_permissions(self):
         """The user must be a verified journalist to upload a document"""
         self.set_message("Checking permissions...")
@@ -36,7 +40,7 @@ class ConvertEmail(AddOn):
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
         extracts attachments if selected"""
-        if extract_attachments:
+        if self.extract_attachments:
             bash_cmd = f"java -jar email.jar -a -q {file_path}; mv ./out/EMLs/*attachments* attach;"
         else:
             bash_cmd = f"java -jar email.jar -q {file_path}"
@@ -50,10 +54,6 @@ class ConvertEmail(AddOn):
         url = self.data["url"]
         self.check_permissions()
         self.fetch_files(url)
-        if "attachments" in self.data:
-            extract_attachments=True
-        else: 
-            extract_attachments=False
         successes = 0
         errors = 0
         for current_path, folders, files in os.walk("./out/"):
@@ -73,7 +73,7 @@ class ConvertEmail(AddOn):
                     self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
-        if extract_attachments:
+        if self.extract_attachments:
             subprocess.call("zip -q -r attachments.zip attach", shell=True)
             self.upload_file(open("attachments.zip"))
 
