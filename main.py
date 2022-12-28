@@ -50,7 +50,10 @@ class ConvertEmail(AddOn):
         url = self.data["url"]
         self.check_permissions()
         self.fetch_files(url)
-
+        if self.data.has_key("attachments"):
+            extract_attachments=True
+        else: 
+            extract_attachments=False
         successes = 0
         errors = 0
         for current_path, folders, files in os.walk("./out/"):
@@ -70,7 +73,7 @@ class ConvertEmail(AddOn):
                     self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
-        if self.data["attachments"]:
+        if extract_attachments:
             subprocess.call("zip -q -r attachments.zip attach", shell=True)
             self.upload_file(open("attachments.zip"))
 
