@@ -14,11 +14,7 @@ from clouddl import grab
 
 class ConvertEmail(AddOn):
     """DocumentCloud Add-On that converts EML/MSG files to PDFs and uploads them to DocumentCloud"""
-    
-    if "attachments" in self.data:
-        extract_attachments=True
-    else:
-        extract_attachments=False
+    extract_attachments = False
     def check_permissions(self):
         """The user must be a verified journalist to upload a document"""
         self.set_message("Checking permissions...")
@@ -54,6 +50,8 @@ class ConvertEmail(AddOn):
         url = self.data["url"]
         self.check_permissions()
         self.fetch_files(url)
+        if "attachments" in self.data:
+            self.extract_attachments = True
         successes = 0
         errors = 0
         for current_path, folders, files in os.walk("./out/"):
