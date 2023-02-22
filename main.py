@@ -33,11 +33,6 @@ class ConvertEmail(AddOn):
         os.makedirs(os.path.dirname("./out/"), exist_ok=True)
         os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
         downloaded = grab(url, "./out/")
-        os.chdir('./out/')
-        for root, dirs, files in os.walk(os.getcwd()):
-            for i in files:
-                os.rename(i, i.replace(' ', ''))
-        os.chdir('..')
         
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
@@ -62,6 +57,7 @@ class ConvertEmail(AddOn):
         errors = 0
         for current_path, folders, files in os.walk("./out/"):
             for file_name in files:
+                file_name = file_name.replace(' ', '')
                 file_name = os.path.join(current_path, file_name)
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
                 abs_path = os.path.abspath(file_name)
