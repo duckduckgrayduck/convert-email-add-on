@@ -36,6 +36,8 @@ class ConvertEmail(AddOn):
         os.chdir('./out/')
         for filename in os.listdir(os.getcwd()):
             os.rename(filename, filename.replace('(','').replace(')',''))
+            print(filename)
+            print(os.getcwd())
         os.chdir('..')
         
     def eml_to_pdf(self, file_path):
@@ -64,8 +66,6 @@ class ConvertEmail(AddOn):
                 file_name = os.path.join(current_path, file_name)
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
                 abs_path = os.path.abspath(file_name)
-                print(abs_path)
-                print(file_name)
                 try:
                     self.eml_to_pdf(abs_path)
                 except RuntimeError as re:
