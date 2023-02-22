@@ -36,17 +36,15 @@ class ConvertEmail(AddOn):
         os.chdir('./out/')
         for filename in os.listdir(os.getcwd()):
             os.rename(filename, filename.replace('(','').replace(')',''))
-        print(os.listdir('.'))
-        print(os.getcwd())
         os.chdir('..')
         
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
         extracts attachments if selected"""
         if self.extract_attachments:
-            bash_cmd = f"java -jar email.jar -a -q {file_path}; mv ./out/EMLs/*attachments* attach;"
+            bash_cmd = f"java -jar email.jar -a {file_path}; mv ./out/EMLs/*attachments* attach;"
         else:
-            bash_cmd = f"java -jar email.jar -q {file_path}"
+            bash_cmd = f"java -jar email.jar {file_path}"
         subprocess.call(bash_cmd, shell=True)
         print(os.listdir('./out/'))
 
