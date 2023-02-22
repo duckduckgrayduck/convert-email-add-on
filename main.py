@@ -59,9 +59,9 @@ class ConvertEmail(AddOn):
         for current_path, folders, files in os.walk("./out/"):
             for file_name in files:
                 file_name = os.path.join(current_path, file_name)
-                os.rename(file_name, file_name.replace(' ', '').replace('(', '').replace(')', ''))
+                clean_file_name = os.rename(file_name, file_name.replace(' ', '').replace('(', '').replace(')', ''))
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
-                abs_path = os.path.abspath(file_name)
+                abs_path = os.path.abspath(clean_file_name)
                 try:
                     self.eml_to_pdf(abs_path)
                 except RuntimeError as re:
