@@ -64,6 +64,8 @@ class ConvertEmail(AddOn):
                 file_name = os.path.join(current_path, file_name)
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
                 abs_path = os.path.abspath(file_name)
+                print(abs_path)
+                print(file_name)
                 try:
                     self.eml_to_pdf(abs_path)
                 except RuntimeError as re:
@@ -73,7 +75,7 @@ class ConvertEmail(AddOn):
                 else:
                     self.set_message("Uploading converted file to DocumentCloud...")
                     file_name_no_ext = os.path.splitext(abs_path)[0]
-                    self.client.documents.upload(f"{file_name_no_ext}.pdf")
+                    #self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
         if self.extract_attachments:
