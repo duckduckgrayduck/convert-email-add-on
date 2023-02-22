@@ -35,7 +35,7 @@ class ConvertEmail(AddOn):
         downloaded = grab(url, "./out/")
         os.chdir('./out/')
         for filename in os.listdir(os.getcwd()):
-            filename.replace('(','').replace(')','')
+            os.rename(filename, filename.replace('(','').replace(')',''))
         print(os.listdir(os.getcwd()))
         os.chdir('..')
         
