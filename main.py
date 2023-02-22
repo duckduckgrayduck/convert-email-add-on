@@ -75,6 +75,7 @@ class ConvertEmail(AddOn):
                 else:
                     self.set_message("Uploading converted file to DocumentCloud...")
                     file_name_no_ext = os.path.splitext(abs_path)[0]
+                    print(file_name_no_ext)
                     #self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
