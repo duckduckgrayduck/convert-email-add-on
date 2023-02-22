@@ -36,7 +36,8 @@ class ConvertEmail(AddOn):
         os.chdir('./out/')
         for filename in os.listdir(os.getcwd()):
             filename.replace('(','').replace(')','')
-
+        os.chdir('..')
+        
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
         extracts attachments if selected"""
