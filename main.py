@@ -48,6 +48,7 @@ class ConvertEmail(AddOn):
         else:
             bash_cmd = f"java -jar email.jar -q {file_path}"
         subprocess.call(bash_cmd, shell=True)
+        print(os.listdir('./out/'))
 
     def main(self):
         """Fetches files from Google Drive/Dropbox,
@@ -75,7 +76,6 @@ class ConvertEmail(AddOn):
                 else:
                     self.set_message("Uploading converted file to DocumentCloud...")
                     file_name_no_ext = os.path.splitext(abs_path)[0]
-                    print(file_name_no_ext)
                     #self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
