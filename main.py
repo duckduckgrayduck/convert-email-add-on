@@ -38,9 +38,9 @@ class ConvertEmail(AddOn):
         """Uses a java program to convert EML/MSG files to PDFs
         extracts attachments if selected"""
         if self.extract_attachments:
-            bash_cmd = f"java -jar email.jar -a {file_path}; mv ./out/EMLs/*attachments* attach;"
+            bash_cmd = f"java -jar email.jar -a -q {file_path}; mv ./out/EMLs/*attachments* attach;"
         else:
-            bash_cmd = f"java -jar email.jar {file_path}"
+            bash_cmd = f"java -jar email.jar -q {file_path}"
         subprocess.call(bash_cmd, shell=True)
 
     def main(self):
@@ -61,7 +61,6 @@ class ConvertEmail(AddOn):
                 clean_file_name = shutil.move(file_name, file_name.replace(' ', '').replace('(', '').replace(')', ''))
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
                 abs_path = os.path.abspath(clean_file_name)
-                print(abs_path)
                 try:
                     self.eml_to_pdf(abs_path)
                 except RuntimeError as re:
@@ -71,7 +70,7 @@ class ConvertEmail(AddOn):
                 else:
                     self.set_message("Uploading converted file to DocumentCloud...")
                     file_name_no_ext = os.path.splitext(abs_path)[0]
-                    #self.client.documents.upload(f"{file_name_no_ext}.pdf")
+                    self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
         if self.extract_attachments:
