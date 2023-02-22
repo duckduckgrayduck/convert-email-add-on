@@ -35,7 +35,7 @@ class ConvertEmail(AddOn):
         os.chdir('./out/')
         bash_cmd = 'for file in *; do mv "$file" $(echo "$file" | sed -e \'s/[^A-Za-z0-9._-]/_/g\'); done &'
         subprocess.call(bash_cmd, shell=True)
-        os.listdir(os.getcwd())
+        print(os.listdir(os.getcwd()))
         os.chdir('..')
 
     def eml_to_pdf(self, file_path):
@@ -73,7 +73,7 @@ class ConvertEmail(AddOn):
                 else:
                     self.set_message("Uploading converted file to DocumentCloud...")
                     file_name_no_ext = os.path.splitext(abs_path)[0]
-                    self.client.documents.upload(f"{file_name_no_ext}.pdf")
+                    #self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
         if self.extract_attachments:
