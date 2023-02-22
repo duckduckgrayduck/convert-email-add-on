@@ -33,7 +33,7 @@ class ConvertEmail(AddOn):
         os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
         downloaded = grab(url, "./out/")
         os.chdir('./out/')
-        subprocess.call(.'../strip.sh', shell=True)
+        subprocess.call('../strip.sh', shell=True)
         print(os.listdir(os.getcwd()))
         os.chdir('..')
 
