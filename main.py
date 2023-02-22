@@ -61,6 +61,7 @@ class ConvertEmail(AddOn):
                 abs_path = os.path.abspath(file_name)
                 try:
                     self.eml_to_pdf(abs_path)
+                    print(os.listdir())
                 except RuntimeError as re:
                     self.send_mail("Runtime Error for Email Conversion AddOn", "Please forward this to info@documentcloud.org \n" + str(re))
                     errors += 1
@@ -68,7 +69,7 @@ class ConvertEmail(AddOn):
                 else:
                     self.set_message("Uploading converted file to DocumentCloud...")
                     file_name_no_ext = os.path.splitext(abs_path)[0]
-                    self.client.documents.upload(f"{file_name_no_ext}.pdf")
+                    # self.client.documents.upload(f"{file_name_no_ext}.pdf")
                     successes += 1
 
         if self.extract_attachments:
