@@ -42,7 +42,6 @@ class ConvertEmail(AddOn):
         else:
             bash_cmd = f"java -jar email.jar {file_path}"
         subprocess.call(bash_cmd, shell=True)
-        print(os.listdir('./out'))
 
     def main(self):
         """Fetches files from Google Drive/Dropbox,
@@ -61,8 +60,8 @@ class ConvertEmail(AddOn):
                 file_name = os.path.join(current_path, file_name)
                 os.rename(file_name, file_name.replace(' ', '').replace('(', '').replace(')', ''))
                 self.set_message("Attempting to convert EML/MSG files to PDFs...")
-                print(file_name)
                 abs_path = os.path.abspath(file_name)
+                print(abs_path)
                 try:
                     self.eml_to_pdf(abs_path)
                 except RuntimeError as re:
