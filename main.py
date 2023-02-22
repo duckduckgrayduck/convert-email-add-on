@@ -42,7 +42,7 @@ class ConvertEmail(AddOn):
         else:
             bash_cmd = f"java -jar email.jar {file_path}"
         subprocess.call(bash_cmd, shell=True)
-        print(os.listdir('./out/Dayton Messages/'))
+        print(os.listdir('./out/Dayton/'))
 
     def main(self):
         """Fetches files from Google Drive/Dropbox,
