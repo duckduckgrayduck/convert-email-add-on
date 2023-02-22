@@ -34,8 +34,9 @@ class ConvertEmail(AddOn):
         os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
         downloaded = grab(url, "./out/")
         os.chdir('./out/')
-        for filename in os.listdir(os.getcwd()):
-            os.rename(filename, filename.replace(' ', ''))
+        for root, dirs, files in os.walk(os.getcwd()):
+            for i in files:
+                os.rename(i, i.replace(' ', ''))
         os.chdir('..')
         
     def eml_to_pdf(self, file_path):
