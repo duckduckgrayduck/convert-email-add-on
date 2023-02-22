@@ -35,6 +35,7 @@ class ConvertEmail(AddOn):
         os.chdir('./out/')
         bash_cmd = 'for file in *; do mv "$file" $(echo "$file" | sed -e \'s/[^A-Za-z0-9._-]/_/g\'); done &'
         subprocess.call(bash_cmd, shell=True)
+        os.listdir(os.getcwd())
         os.chdir('..')
 
     def eml_to_pdf(self, file_path):
