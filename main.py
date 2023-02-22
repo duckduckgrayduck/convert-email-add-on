@@ -33,12 +33,9 @@ class ConvertEmail(AddOn):
         os.makedirs(os.path.dirname("./out/"), exist_ok=True)
         os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
         downloaded = grab(url, "./out/")
-        bash_cmd2 = 'chmod 755 strip.sh'
-        subprocess.call(bash_cmd2)
         os.chdir('./out/')
-        subprocess.call('../strip.sh', shell=True)
-        print(os.listdir(os.getcwd()))
-        os.chdir('..')
+        for filename in os.listdir(os.getcwd()):
+            filename.replace('(','').replace(')','')
 
     def eml_to_pdf(self, file_path):
         """Uses a java program to convert EML/MSG files to PDFs
