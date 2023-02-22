@@ -5,6 +5,7 @@ will convert them to PDFs and upload them to DocumentCloud
 """
 import os
 import sys
+import stat
 import shutil
 import subprocess
 import requests
@@ -33,7 +34,7 @@ class ConvertEmail(AddOn):
         os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
         downloaded = grab(url, "./out/")
         os.chdir('./out/')
-        os.chmod('../strip.sh', 755)
+        os.chmod('../strip.sh', stat.S_IRWXO)
         subprocess.call('../strip.sh', shell=True)
         print(os.listdir(os.getcwd()))
         os.chdir('..')
