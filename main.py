@@ -33,7 +33,6 @@ class ConvertEmail(AddOn):
         os.makedirs(os.path.dirname("./out/"), exist_ok=True)
         os.makedirs(os.path.dirname("./attach/"), exist_ok=True)
         downloaded = grab(url, "./out/")
-        os.chdir('./out/')
         bash_cmd2 = 'chmod 755 ../strip.sh'
         subprocess.call(bash_cmd2)
         subprocess.call('../strip.sh', shell=True)
