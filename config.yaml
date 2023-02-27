@@ -15,7 +15,7 @@ properties:
     title: Access level for uploaded documents (public, private(default), organization)
     type: string
     default: private
-  project_id:
+ project_id:
     title: Project ID of the project you would like the documents uploaded to (optional)
     type: integer
 required: 
