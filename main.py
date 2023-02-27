@@ -64,7 +64,7 @@ class ConvertEmail(AddOn):
                 try:
                     self.eml_to_pdf(abs_path)
                 except RuntimeError as re:
-                    self.send_mail("Runtime Error for Email Conversion AddOn", "Please forward this to info@documentcloud.org \n" + str(re))
+                    self.send_mail("Runtime Error for Email Conversion", "Please forward this to info@documentcloud.org \n" + str(re))
                     errors += 1
                     continue
                 else:
@@ -74,7 +74,7 @@ class ConvertEmail(AddOn):
                         self.client.documents.upload(f"{file_name_no_ext}.pdf")
                         successes += 1
                     except OSError as e: 
-                        print(f"Unable to convert {file_name_no_ext}.pdf: {e}", file=sys.stderr)
+                        print(f"Unable to upload {file_name_no_ext}.pdf: {e}", file=sys.stderr)
                         errors +=1
                         continue
                         
