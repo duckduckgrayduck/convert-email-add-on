@@ -53,6 +53,8 @@ class ConvertEmail(AddOn):
         self.fetch_files(url)
         if "attachments" in self.data:
             self.extract_attachments = True
+        access_level = self.data["access_level"]
+        project_id = self.data.get("project_id")
         successes = 0
         errors = 0
         for current_path, folders, files in os.walk("./out/"):
@@ -69,9 +71,13 @@ class ConvertEmail(AddOn):
                     continue
                 else:
                     try:
+                        if project_id is not None:
+                            kwargs = {"project": project_id}
+                        else:
+                            kwargs = {}
                         self.set_message("Uploading converted file to DocumentCloud...")
                         file_name_no_ext = os.path.splitext(abs_path)[0].replace("'", "")
-                        self.client.documents.upload(f"{file_name_no_ext}.pdf")
+                        self.client.documents.upload(f"{file_name_no_ext}.pdf", access=access_level, **kwargs)
                         successes += 1
                     except OSError as e: 
                         print(f"Unable to upload {file_name_no_ext}.pdf: {e}", file=sys.stderr)
